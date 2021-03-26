@@ -12,8 +12,12 @@
             <NroResol t-esc="NroResol"/>
             <TmstFirmaEnv t-esc="TmstFirmaEnv"/>
             <SubTotDTE t-foreach="tipodte_subtotals" t-as="subtotal">
-                <TpoDTE t-esc="subtotal.code"/>
-                <NroDTE t-esc="subtotal.count"/>
+                <TpoDTE>
+                    <t t-esc="subtotal.code"/>
+                </TpoDTE>
+                <NroDTE>
+                    <t t-esc="subtotal.count"/>
+                </NroDTE>
             </SubTotDTE>
         </Caratula>
                 <t t-foreach="dtes" t-as="dte">
