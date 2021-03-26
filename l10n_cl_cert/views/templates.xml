@@ -13,10 +13,10 @@
             <TmstFirmaEnv t-esc="TmstFirmaEnv"/>
             <SubTotDTE t-foreach="tipodte_subtotals" t-as="subtotal">
                 <TpoDTE>
-                    <t t-esc="subtotal.code"/>
+                    <t t-esc="subtotal['code']"/>
                 </TpoDTE>
                 <NroDTE>
-                    <t t-esc="subtotal.count"/>
+                    <t t-esc="subtotal['count']"/>
                 </NroDTE>
             </SubTotDTE>
         </Caratula>
