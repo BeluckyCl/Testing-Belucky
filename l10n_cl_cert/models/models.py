@@ -16,7 +16,7 @@ class AccountMove(models.Model):
                                                    groupby=["l10n_latam_document_type_id"])
         tipodte_subtotals = []
         for each in subtotals:
-            code = each["l10n_latam.document.type"].search([("id", "=", 
+            code = self.env["l10n_latam.document.type"].search([("id", "=", 
                                                              each["l10n_latam_document_type_id"][0])])
             count = each["l10n_latam_document_type_id_count"]
             tipodte.append({'code': code,
