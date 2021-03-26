@@ -26,7 +26,7 @@ class AccountMove(models.Model):
                             'count': count})
         dtes = []
         for each in dtes_attachment:
-            dtes.append({"dte": base64.b64decode(each.l10n_cl_dte_file.datas).decode('ISO-8859-1')})
+            dtes.append(base64.b64decode(each.l10n_cl_dte_file.datas).decode('ISO-8859-1'))
             if not first_doc:
                 first_doc = each
 
