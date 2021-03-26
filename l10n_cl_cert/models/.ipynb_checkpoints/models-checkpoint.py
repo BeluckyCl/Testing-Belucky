@@ -44,11 +44,13 @@ class AccountMove(models.Model):
         })
         _logger.info('Despues del render')
         dte_rendered = unescape(dte_rendered.decode('utf-8')).replace('<?xml version="1.0" encoding="ISO-8859-1" ?>', '')
+        _logger.info('Despues de Unescape')
         dte_signed = self._sign_full_xml(
             dte_rendered, digital_signature, 'SetDoc',
             'env',
             False
         )
+        _logger.info('Despues de Sign')
         _logger.info('Envío DTE: {}'.format(dte_signed))
 
 # class l10n_cl_cert(models.Model):
