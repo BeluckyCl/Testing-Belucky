@@ -10,8 +10,8 @@ class AccountMove(models.Model):
     
     def _xml_dte_list(self, dte_names):
         first_doc = None
-        dtes_attachment = env["account.move"].search([("name", "in", dte_names)])
-        subtotals = env["account.move"].read_group([("name", "in", dte_names)], 
+        dtes_attachment = self.env["account.move"].search([("name", "in", dte_names)])
+        subtotals = self.env["account.move"].read_group([("name", "in", dte_names)], 
                                                    fields=["l10n_latam_document_type_id"],
                                                    groupby=["l10n_latam_document_type_id"])
         tipodte_subtotals = []
