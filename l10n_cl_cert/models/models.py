@@ -9,6 +9,7 @@ class AccountMove(models.Model):
     _inherit = ['account.move']
     
     def _xml_dte_list(self, dte_names):
+        first_doc = None
         dtes_attachment = env["account.move"].search([("name", "in", dte_names)])
         subtotals = env["account.move"].read_group([("name", "in", dte_names)], 
                                                    fields=["l10n_latam_document_type_id"],
@@ -22,9 +23,29 @@ class AccountMove(models.Model):
                             'count': count})
         dtes = []
         for each in dtes_attachment:
-            dtes.append(base64.b64decode(each.l10n_cl_dte_file.datas).decode('ISO-8859-1'))
+            dtes.append({"dte": base64.b64decode(each.l10n_cl_dte_file.datas).decode('ISO-8859-1')})
+            if not first_doc:
+                first_doc = each
+
+        digital_signature = first_doc.company_id._get_digital_signature(user_id=self.env.user.id)
         template = self.env.ref('l10n_cl_cert.envio_dte_cert')
         
+        dte_rendered = template._render({
+            'RutEmisor': self._l10n_cl_format_vat(first_doc.company_id.vat),
+            'RutEnvia': first_doc.company_id._get_digital_signature(user_id=self.env.user.id).subject_serial_number,
+            'RutReceptor': first_doc.partner_id.vat,
+            'FchResol': first_doc.company_id.l10n_cl_dte_resolution_date,
+            'NroResol': first_doc.company_id.l10n_cl_dte_resolution_number,
+            'TmstFirmaEnv': self._get_cl_current_strftime(),
+            'dtes': dtes
+        })
+        dte_rendered = unescape(dte_rendered.decode('utf-8')).replace('<?xml version="1.0" encoding="ISO-8859-1" ?>', '')
+        dte_signed = self._sign_full_xml(
+            dte_rendered, digital_signature, 'SetDoc',
+            'env',
+            False
+        )
+        _logger.info('Envío DTE: {}'.format(dte_signed))
 
 # class l10n_cl_cert(models.Model):
 #     _name = 'l10n_cl_cert.l10n_cl_cert'
