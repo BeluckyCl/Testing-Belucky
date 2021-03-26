@@ -32,7 +32,7 @@ class AccountMove(models.Model):
 
         digital_signature = first_doc.company_id._get_digital_signature(user_id=self.env.user.id)
         template = self.env.ref('l10n_cl_cert.envio_dte_cert')
-        _logger.info('Previo a render: {}'.format(tipodte_subtotals))
+        # _logger.info('Previo a render: {}'.format(tipodte_subtotals))
         dte_rendered = template._render({
             'RutEmisor': self._l10n_cl_format_vat(first_doc.company_id.vat),
             'RutEnvia': first_doc.company_id._get_digital_signature(user_id=self.env.user.id).subject_serial_number,
@@ -43,7 +43,7 @@ class AccountMove(models.Model):
             'dtes': dtes,
             'tipodte_subtotals': tipodte_subtotals
         })
-        _logger.info('Despues del render')
+        #_logger.info('Despues del render')
         dte_rendered = unescape(dte_rendered.decode('utf-8')).replace('<?xml version="1.0" encoding="ISO-8859-1" ?>', '')
         _logger.info('Despues de Unescape: {}'.format(dte_rendered))
         dte_signed = self._sign_full_xml(
@@ -51,7 +51,7 @@ class AccountMove(models.Model):
             'env',
             False
         )
-        _logger.info('Despues de Sign')
+        # _logger.info('Despues de Sign')
         _logger.info('Envío DTE: {}'.format(dte_signed))
 
 # class l10n_cl_cert(models.Model):
