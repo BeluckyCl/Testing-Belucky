@@ -2,6 +2,8 @@
 
 from odoo import models, fields, api
 import base64
+from html import unescape
+
 import logging
 _logger = logging.getLogger(__name__)
 
