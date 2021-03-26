@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <odoo>
     <data>
-        <template id="envio_dte_cert" inherit="l10n_cl_edi.envio_dte">
+        <template id="envio_dte_cert">
             <xpath expr="//SubTotDTE" position="replace">
             <SubTotDTE t-foreach="tipodte_subtotals" t-as="subtotal">
                 <TpoDTE t-esc="subtotal.code"/>
