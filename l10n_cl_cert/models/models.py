@@ -40,7 +40,8 @@ class AccountMove(models.Model):
             'FchResol': first_doc.company_id.l10n_cl_dte_resolution_date,
             'NroResol': first_doc.company_id.l10n_cl_dte_resolution_number,
             'TmstFirmaEnv': self._get_cl_current_strftime(),
-            'dtes': dtes
+            'dtes': dtes,
+            'tipodte_subtotals': tipodte_subtotals,
         })
         _logger.info('Despues del render')
         dte_rendered = unescape(dte_rendered.decode('utf-8')).replace('<?xml version="1.0" encoding="ISO-8859-1" ?>', '')
