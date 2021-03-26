@@ -20,7 +20,7 @@ class AccountMove(models.Model):
         tipodte_subtotals = []
         for each in subtotals:
             code = self.env["l10n_latam.document.type"].search([("id", "=", 
-                                                             each["l10n_latam_document_type_id"][0])])
+                                                             each["l10n_latam_document_type_id"][0])]).code
             count = each["l10n_latam_document_type_id_count"]
             tipodte_subtotals.append({'code': code,
                             'count': count})
