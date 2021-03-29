@@ -7,7 +7,7 @@ import base64
 class L10nClCert(http.Controller):
     @http.route('/l10n_cl_cert/conv', auth='user', methods=['GET'])
     def index(self, **kw):
-        values = dict(kwargs)
+        values = dict(kw)
         docs = values["doc"]
         model = http.request.env["account.move"]
         content = model._xml_dte_list(docs)
