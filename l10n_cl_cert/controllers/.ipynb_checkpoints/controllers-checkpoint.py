@@ -10,7 +10,7 @@ class L10nClCert(http.Controller):
         content = model._xml_dte_list(["FNA 000110", "FNA 000111", "FNA 000112", "N/C 000018"])
         filecontent = base64.b64decode(content)
         filename = "envio.xml"
-        return request.make_response(filecontent,
+        return http.request.make_response(filecontent,
                             [('Content-Type', 'application/octet-stream'),
                              ('Content-Disposition', content_disposition(filename))])
 
