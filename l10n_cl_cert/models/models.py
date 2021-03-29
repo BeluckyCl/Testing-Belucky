@@ -51,7 +51,7 @@ class AccountMove(models.Model):
             'env',
             False
         )
-        dte_final = dte_signed.decode("utf-8").encode('iso-8859-1')
+        dte_final = dte_signed.encode('iso-8859-1')
         # _logger.info('Despues de Sign')
         _logger.info('Envío DTE: {}'.format(dte_signed))
 
