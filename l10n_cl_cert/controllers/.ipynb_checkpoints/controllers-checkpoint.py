@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import http
+import base64
 
 
 class L10nClCert(http.Controller):
