@@ -9,8 +9,9 @@ class L10nClCert(http.Controller):
     @http.route('/l10n_cl_cert/conv', auth='user', methods=['GET'])
     def index(self, **kw):
         values = dict(kw)
+        
         _logger.info('values: {}'.format(values))
-        docs = values["doc"]
+        docs = values["doc"].split(",")
         model = http.request.env["account.move"]
         content = model._xml_dte_list(docs)
         filecontent = base64.b64decode(content)
