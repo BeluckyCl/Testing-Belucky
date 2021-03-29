@@ -53,7 +53,8 @@ class AccountMove(models.Model):
         )
         dte_final = dte_signed.encode('iso-8859-1')
         # _logger.info('Despues de Sign')
-        _logger.info('Envío DTE: {}'.format(dte_final))
+        # _logger.info('Envío DTE: {}'.format(dte_final))
+        return (dte_final)
 
 # class l10n_cl_cert(models.Model):
 #     _name = 'l10n_cl_cert.l10n_cl_cert'

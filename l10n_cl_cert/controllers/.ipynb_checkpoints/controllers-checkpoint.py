@@ -14,6 +14,9 @@ class L10nClCert(http.Controller):
         docs = values["doc"].split(",")
         model = http.request.env["account.move"]
         content = model._xml_dte_list(docs)
+        _logger.info('contenido: {}'.format(content))
+        _logger.info('fin de contenido')
+
         filecontent = base64.b64decode(content)
         filename = "envio.xml"
         return http.request.make_response(filecontent,
