@@ -44,13 +44,14 @@ class AccountMove(models.Model):
             'tipodte_subtotals': tipodte_subtotals
         })
         #_logger.info('Despues del render')
-        dte_rendered = unescape(dte_rendered.decode('iso-8859-1')).replace('<?xml version="1.0" encoding="ISO-8859-1" ?>', '')
+        dte_rendered = unescape(dte_rendered.decode('utf-8')).replace('<?xml version="1.0" encoding="ISO-8859-1" ?>', '')
         _logger.info('Despues de Unescape: {}'.format(dte_rendered))
         dte_signed = self._sign_full_xml(
             dte_rendered, digital_signature, 'SetDoc',
             'env',
             False
         )
+        dte_final = dte_signed.decode("utf-8").encode('iso-8859-1')
         # _logger.info('Despues de Sign')
         _logger.info('Envío DTE: {}'.format(dte_signed))
 
