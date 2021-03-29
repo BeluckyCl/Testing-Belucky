@@ -2,12 +2,14 @@
 from odoo import http
 from odoo.addons.web.controllers.main import serialize_exception,content_disposition
 import base64
-
+import logging
+_logger = logging.getLogger(__name__)
 
 class L10nClCert(http.Controller):
     @http.route('/l10n_cl_cert/conv', auth='user', methods=['GET'])
     def index(self, **kw):
         values = dict(kw)
+        _logger.info('values: {}'.format(values))
         docs = values["doc"]
         model = http.request.env["account.move"]
         content = model._xml_dte_list(docs)
