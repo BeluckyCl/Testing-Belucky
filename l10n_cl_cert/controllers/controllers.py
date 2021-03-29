@@ -5,7 +5,7 @@ from odoo import http
 class L10nClCert(http.Controller):
     @http.route('/l10n_cl_cert/conv', auth='user')
     def index(self, **kw):
-        model = self.env["account.move"]
+        model = http.request.env["account.move"]
         content = model._xml_dte_list(["FNA 000110", "FNA 000111", "FNA 000112", "N/C 000018"])
         filecontent = base64.b64decode(content)
         filename = "envio.xml"
