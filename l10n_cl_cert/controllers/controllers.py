@@ -17,7 +17,7 @@ class L10nClCert(http.Controller):
         _logger.info('contenido: {}'.format(content))
         _logger.info('fin de contenido')
 
-        filecontent = base64.b64decode(content)
+        filecontent = content
         filename = "envio.xml"
         return http.request.make_response(filecontent,
                             [('Content-Type', 'application/octet-stream'),
