@@ -28,7 +28,7 @@ class AccountMove(models.Model):
             dte_attachment = self.env["account.move"].search([("name", "=", each)])[0]
             dtes.append(base64.b64decode(dte_attachment.l10n_cl_dte_file.datas).decode('ISO-8859-1'))
             if not first_doc:
-                first_doc = each
+                first_doc = dte_attachment
 
         digital_signature = first_doc.company_id._get_digital_signature(user_id=self.env.user.id)
         template = self.env.ref('l10n_cl_cert.envio_dte_cert')
