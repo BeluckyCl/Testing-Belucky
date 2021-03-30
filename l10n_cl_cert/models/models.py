@@ -13,7 +13,6 @@ class AccountMove(models.Model):
     
     def _xml_dte_list(self, dte_names):
         first_doc = None
-        dtes_attachment = self.env["account.move"].search([("name", "in", dte_names)])
         subtotals = self.env["account.move"].read_group([("name", "in", dte_names)], 
                                                    fields=["l10n_latam_document_type_id"],
                                                    groupby=["l10n_latam_document_type_id"])
@@ -25,8 +24,9 @@ class AccountMove(models.Model):
             tipodte_subtotals.append({'code': code,
                             'count': count})
         dtes = []
-        for each in dtes_attachment:
-            dtes.append(base64.b64decode(each.l10n_cl_dte_file.datas).decode('ISO-8859-1'))
+        for each in dte_names:
+            dte_attachment = self.env["account.move"].search([("name", "=", each)])[0]
+            dtes.append(base64.b64decode(dte_attachment.l10n_cl_dte_file.datas).decode('ISO-8859-1'))
             if not first_doc:
                 first_doc = each
 
