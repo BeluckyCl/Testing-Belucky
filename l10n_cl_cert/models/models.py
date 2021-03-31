@@ -9,7 +9,7 @@ _logger = logging.getLogger(__name__)
 
 class AccountInvoiceReference(models.Model):
     _inherit = 'l10n_cl.account.invoice.reference'
-    l10n_cl_reference_doc_type_selection = fields.Selection(selection_add=[("SET", "(SET) Set de Pruebas para SII")],
+    l10n_cl_reference_doc_type_selection = fields.Selection(selection_add=[("SET", "(SET) Set de Pruebas para SII"),],
                                                            ondelete={'SET': 'set default'}, default="34")
     
     
