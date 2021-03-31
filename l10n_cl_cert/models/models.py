@@ -7,6 +7,13 @@ from html import unescape
 import logging
 _logger = logging.getLogger(__name__)
 
+class AccountInvoiceReference(models.Model):
+    _name = 'l10n_cl.account.invoice.reference'
+    _inherit = ['l10n_cl.account.invoice.reference']
+    l10n_cl_reference_doc_type_selection = fields.Selection(selection_add=[("SET", "(SET) Set de Pruebas para SII")])
+    
+    
+
 class AccountMove(models.Model):
     _name = 'account.move'
     _inherit = ['account.move']
