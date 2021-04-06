@@ -71,7 +71,7 @@ class AccountMove(models.Model):
         _logger.info('Envío Libro: {}'.format(libro_venta))
         libro_signed = self._sign_full_xml(
             libro_venta, digital_signature, 'EnvioLibro',
-            'libro',
+            'book',
             False
             # SetDoc -> EnvioLibro
             # env -> libro (</LibroCompraVenta>)
@@ -97,7 +97,7 @@ class L10nClEdiUtilMixin(models.AbstractModel):
             'env_resp': '</RespuestaDTE>',
             'consu': '</ConsumoFolios>',
             'token': '</getToken>',
-            'libro': '</LibroCompraVenta>',
+            'book': '</LibroCompraVenta>',
         }
         tag = tag_to_replace.get(xml_type, '</EnvioBOLETA>')
         return message.replace(tag, sign + tag)
