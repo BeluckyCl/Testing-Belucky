@@ -63,6 +63,43 @@ class AccountMove(models.Model):
         # _logger.info('Envío DTE: {}'.format(dte_final))
         return (dte_final)
 
+    def _xml_libro_signed(self):
+        company = self.env["res.company"].search([])[0]
+        digital_signature = company._get_digital_signature(user_id=self.env.user.id)
+        libro_venta = base64.b64decode(company.x_libro_venta).decode("utf-8")
+        libro_signed = self._sign_full_xml(
+            libro_venta, digital_signature, 'EnvioLibro',
+            'libro',
+            False
+            # SetDoc -> EnvioLibro
+            # env -> libro (</LibroCompraVenta>)
+        )
+        libro_final = libro_signed.encode('iso-8859-1')
+        # _logger.info('Despues de Sign')
+        # _logger.info('Envío DTE: {}'.format(dte_final))
+        return (libro_final)
+
+
+    
+class L10nClEdiUtilMixin(models.AbstractModel):
+    _name = 'l10n_cl.edi.util'
+    _inherit = ['l10n_cl.edi.util']
+
+    def _l10n_cl_append_sig(self, xml_type, sign, message):
+        tag_to_replace = {
+            'doc': '</DTE>',
+            'bol': '</EnvioBOLETA>',
+            'env': '</EnvioDTE>',
+            'recep': '</Recibo>',
+            'env_recep': '</EnvioRecibos>',
+            'env_resp': '</RespuestaDTE>',
+            'consu': '</ConsumoFolios>',
+            'token': '</getToken>',
+            'libro': '</LibroCompraVenta>',
+        }
+        tag = tag_to_replace.get(xml_type, '</EnvioBOLETA>')
+        return message.replace(tag, sign + tag)
+    
 # class l10n_cl_cert(models.Model):
 #     _name = 'l10n_cl_cert.l10n_cl_cert'
 #     _description = 'l10n_cl_cert.l10n_cl_cert'

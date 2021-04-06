@@ -6,19 +6,32 @@ import logging
 _logger = logging.getLogger(__name__)
 
 class L10nClCert(http.Controller):
-    @http.route('/l10n_cl_cert/conv', auth='user', methods=['GET'])
+    @http.route('/l10n_cl_cert/enviodtes', auth='user', methods=['GET'])
     def index(self, **kw):
         values = dict(kw)
         
-        _logger.info('values: {}'.format(values))
+        # _logger.info('values: {}'.format(values))
         docs = values["doc"].split(",")
         model = http.request.env["account.move"]
         content = model._xml_dte_list(docs)
-        _logger.info('contenido: {}'.format(content))
-        _logger.info('fin de contenido')
+        # _logger.info('contenido: {}'.format(content))
+        # _logger.info('fin de contenido')
 
         filecontent = content
         filename = "envio.xml"
+        return http.request.make_response(filecontent,
+                            [('Content-Type', 'application/octet-stream'),
+                             ('Content-Disposition', content_disposition(filename))])
+    
+    @http.route('/l10n_cl_cert/enviolibro', auth='user', methods=['GET'])
+    def index(self, **kw):
+        
+        model = http.request.env["account.move"]
+        content = model._xml_libro_signed()
+        _logger.info('contenido: {}'.format(content))
+
+        filecontent = content
+        filename = "libro.xml"
         return http.request.make_response(filecontent,
                             [('Content-Type', 'application/octet-stream'),
                              ('Content-Disposition', content_disposition(filename))])
