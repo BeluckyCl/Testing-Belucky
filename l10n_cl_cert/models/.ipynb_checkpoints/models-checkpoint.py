@@ -66,7 +66,7 @@ class AccountMove(models.Model):
     def _xml_libro_signed(self):
         company = self.env["res.company"].search([])[0]
         digital_signature = company._get_digital_signature(user_id=self.env.user.id)
-        libro_venta = base64.b64decode(company.x_libro_venta).encode("iso-8859-1").decode("utf-8")
+        libro_venta = base64.b64decode(company.x_libro_venta).decode("utf-8")
         libro_signed = self._sign_full_xml(
             libro_venta, digital_signature, 'EnvioLibro',
             'libro',
